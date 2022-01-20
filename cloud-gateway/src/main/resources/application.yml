@@ -1,0 +1,31 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+      routes:
+      - id: STUDENT-SERVICE
+        uri: lb://STUDENT-SERVICE
+        predicates:
+          - Path=/students/**
+      - id: ADMINISTRATION-SERVICE
+        uri: lb://ADMINISTRATION-SERVICE
+        predicates:
+          - Path=/administration/**
+      - id: BOOK-SERVICE
+        uri: lb://BOOK-SERVICE
+        predicates:
+          - Path=/books/**
